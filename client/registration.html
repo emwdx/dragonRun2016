@@ -1,0 +1,585 @@
+<template name = "selectRace">
+    <p class = "text-center" id = "selectRaceParagraph">
+    <h1 class = "text-center">I am registering a runner for the (select one): </h1>
+<div class = "row">
+
+<div class = "col-md-3 col-md-offset-3 text-center"><span id = "select5KRun" class = "raceSelect">5K Dragon Run</span> </div> 
+<div class = "col-md-3 text-center">
+<span id = "selectFunRun" class = "raceSelect">Fun Run</span></div>         
+</div>
+</p>
+</template>
+<template name="registrationForm">
+<div id = "registrationFormBackground">
+    {{>selectRace}}
+    {{#if raceSelected}}
+    <div id = "registrationFormContent">
+    <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+            <div class = "form-group"><input type = "text" class = "form-control" name = "runnerGivenName" placeholder = "Given Name" title = "Given Name">    
+            </div>
+            <div class = "form-group"><input type = "text" class = "form-control" name = "runnerFamilyName" placeholder = "Family Name" title = "Family Name">   
+            </div>
+            <div class = "form-group">
+                <select class = "form-control" name = "runnerAge" id = "runnerAge" title = "Age group" >
+                    <option value = "">Enter your age group:</option>
+                    <option value = "1">Lower School & ECE (Pre-K - 5)</option>
+                    <option value = "2">Middle School (Grades 6 - 8) </option>
+                    <option value = "3">High School (Grades 9 - 12)</option>
+                    <option value = "4">Adult</option>
+                </select>
+            </div>
+            <div class = "form-group">
+                <select class = "form-control" name = "runnerGender" title = "Gender">
+                    <option value = "">Enter your gender:</option>
+                    <option value = "M">Male</option>
+                    <option value = "F">Female</option>
+                </select>
+            </div>
+            <div class = "form-group"><input type = "phone" class = "form-control" name = "runnerPhone" placeholder = "Contact Phone Number" title = "Contact Phone #" value = "{{userPhone}}">
+            </div>
+            <div class = "form-group"><input type = "text" class = "form-control" name = "runnerEmail" placeholder = "Contact Email Address" title = "Contact Email" value = "{{userEmail}}">
+            </div>
+            <div class = "form-group"><input type = "text" class = "form-control" name = "runnerEmergencyName" placeholder = "Name of Emergency Contact on Race Day" title = "Name of Emergency Contact">
+            </div>
+            <div class = "form-group"><input type = "phone" class = "form-control" name = "runnerEmergencyPhone" placeholder = "Phone Number of Emergency Contact" title = "Phone number of Emergency Contact">
+            </div>
+            {{#unless funRunSelected}}
+            <div class = "form-group">
+                <select class = "form-control" name = "runnerEstimatedTime" title = "Estimated race time">
+                    <option value = "">Select your estimated finish time:</option>
+                    <option value = "1">Under 20 Minutes</option>
+                    <option value = "2">20 - 25 Minutes</option>
+                    <option value = "3">25 - 30 Minutes</option>
+                    <option value = "4">Over 30 Minutes</option>
+                </select>
+            </div>
+            {{/unless}}
+            <div class = "form-group" id = "formShirtSize">
+                <select class = "form-control" name = "runnerShirtSize">
+                    <option value = "">Select your t-shirt size:</option>
+                    <option value = "110">110</option>
+                    <option value = "120">120</option>
+                    <option value = "130">130</option>
+                    <option value = "XS">Extra Small (XS)</option>
+                    <option value = "S">Small (S)</option>
+                    <option value = "M">Medium (M)</option>
+                    <option value = "L">Large (L)</option>
+                    <option value = "XL">Extra Large (XL)</option>
+                    <option value = "XXL">Extra Extra Large</option>
+                </select>
+            </div>
+        </div>
+        </div>
+        <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+            
+            <h3 class = "text-center" id = "shirtNotice">To complete registration, payment must be received before <span class = "HISBlue">Saturday, May 16th.</span></h3>
+            <h4 class = "text-center">Registration Fee: 100 RMB for all runners</h4>
+            If you would like to make an additional donation to the Carnations School, please enter the amount below:
+            <div class = "input-group"><input type ="number" class = "form-control" name = "runnerAdditionalDonation" placeholder = "Donation Amount" id = "additionalDonation" value = "0" min = "0"><span class = "input-group-addon">RMB</span></div>
+        
+            <h2 class = "HISBlue feeTotals">Total Payment Due: {{registrationTotal}} RMB</h2>
+<h4>
+            <input type = "checkbox" class = "form-group" id = "registrationMustPayToComplete"> 
+I understand that I must make a payment of the above amount before my registration is complete.</h4>
+         
+        </div>
+        </div>
+        <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+            
+            {{>raceDisclaimer}}
+        </div>
+        
+        </div>
+  <div class = "row">
+  <div class = "col-md-6 col-md-offset-3">
+   {{#if showSubmitButton}}
+        <p class = "text-center">
+            <button id = "submitRegistration">Submit</button>
+        </p>
+        {{/if}}    
+  </div>      
+  </div>       
+  </div>      
+      
+        {{/if}}
+ 
+  </div>
+</template>
+
+<template name="registrationEdit">
+    {{#with runnerInformation}}
+    <div id = "registrationEditFormContent">
+      
+    
+    
+    <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+        <h3>Edit Registration: </h3>
+            <div class = "form-group">
+             Selected Race:
+                <select class = "form-control" name = "runnerRaceSelected" id = "runnerRaceSelected" title = "raceSelected" disabled>
+                   <option>5K Dragon Run</option>
+                    <option >Fun Run</option>
+                </select>
+            </div>
+            {{#if isWechatUser}}
+            <div class = "input-group">
+                
+            WeChat Name:
+            <input type = "text" class = "form-control" name = "runnerGivenName" placeholder = "Given Name" title = "Given Name" value = "{{runnerWeChat}}">    
+            </div>
+            {{/if}}
+            <div class = "input-group">
+            First Name:
+            <input type = "text" class = "form-control" name = "runnerGivenName" placeholder = "Given Name" title = "Given Name" value = "{{runnerFirstName}}">    
+            </div>
+            
+            <div class = "input-group">
+            Family Name:
+                <input type = "text" class = "form-control" name = "runnerFamilyName" placeholder = "Family Name" title = "Family Name" value = "{{runnerLastName}}">   
+            </div>
+            <div class = "form-group">
+             Age Group:
+                <select class = "form-control" name = "runnerAge" id = "runnerAge" title = "Age group" >
+                   <option value = "1">Lower School & ECE (Pre-K - 5)</option>
+                    <option value = "2">Middle School (Grades 6 - 8) </option>
+                    <option value = "3">High School (Grades 9 - 12)</option>
+                    <option value = "4">Adult</option>
+                </select>
+            </div>
+            <div class = "form-group">
+            Gender:
+                <select class = "form-control" name = "runnerGender" title = "Gender">
+                
+                    <option value = "M">Male</option>
+                    <option value = "F">Female</option>
+                </select>
+            </div>
+            <div class = "form-group">
+            Runner Phone:
+            <input type = "phone" class = "form-control" name = "runnerPhone" placeholder = "Contact Phone Number" title = "Contact Phone #" value = "{{runnerPhone}}">
+            </div>
+            <div class = "form-group">
+            Runner Email:
+            <input type = "text" class = "form-control" name = "runnerEmail" placeholder = "Contact Email Address" title = "Contact Email" value = "{{runnerEmail}}" id = "runnerEmailEdit">
+            </div>
+            <div class = "form-group">
+            Emergency Contact Name:<input type = "text" class = "form-control" name = "runnerEmergencyName" placeholder = "Name of Emergency Contact on Race Day" title = "Name of Emergency Contact" value = "{{runnerEmergencyName}}">
+            </div>
+            <div class = "form-group">
+            Emergency Contact Number:
+            <input type = "phone" class = "form-control" name = "runnerEmergencyPhone" placeholder = "Phone Number of Emergency Contact" title = "Phone number of Emergency Contact" value = "{{runnerEmergencyPhone}}">
+            </div>
+            {{#unless funRunSelected}}
+            <div class = "form-group">
+            Estimated Finish Time:
+                <select class = "form-control" name = "runnerEstimatedTime" title = "Estimated race time">
+                   
+                    <option value = "1">Under 20 Minutes</option>
+                    <option value = "2">20 - 25 Minutes</option>
+                    <option value = "3">25 - 30 Minutes</option>
+                    <option value = "4">Over 30 Minutes</option>
+                </select>
+            </div>
+            {{/unless}}
+            <div class = "form-group" id = "formShirtSize">
+            Shirt Size:
+                <select class = "form-control" name = "runnerShirtSize">
+                    
+                    <option value = "110" >110</option>
+                    <option value = "120">120</option>
+                    <option value = "130">130</option>
+                    <option value = "XS">Extra Small (XS)</option>
+                    <option value = "S">Small (S)</option>
+                    <option value = "M">Medium (M)</option>
+                    <option value = "L">Large (L)</option>
+                    <option value = "XL">Extra Large (XL)</option>
+                    <option value = "XXL">Extra Extra Large (XXL)</option>
+                </select>
+            </div>
+        </div>
+        </div>
+        <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+        <h4 class = "text-center">Registration Fee: {{registrationTotal}} RMB</h4>
+        
+        </div>
+        </div>
+  <div class = "row">
+  <div class = "col-md-6 col-md-offset-3">
+   
+        <p class = "text-center">
+            <button id = "updateRegistration">Update</button>
+        </p>
+       
+  </div>      
+  </div> 
+        
+  </div>      
+   
+    {{/with}}
+</template>
+
+<template name = "registrationNotReady">
+<div class = "row">
+<div class = "col-lg-6 col-lg-offset-3">
+<h1 class = "HISGold centerText">Registration opens on Saturday, April 18th.<br> See you then! </h1>  
+</div>
+</div>
+
+</template>
+
+
+
+<template name = "paymentConfirmationFrontPage">
+<div class = "container">
+<div class = "row">
+<div class = "col-md-4 HISGoldSolid">
+<input type = "text" placeholder = "e.g. '4Pyj'" id = "paymentByEmail" class = "form-control">
+<button id = "submitEmailSearch">Search by Email</button>    
+</div>  
+<div class = "col-md-4 HISGoldSolid">
+<input type = "text" placeholder = "e.g. '4Pyj'" id = "paymentByCode" class = "form-control">
+<button id = "submitCodeSearch">Search by Registration Code</button>    
+</div>
+    {{#if isWechatUser}}
+<div class = "col-md-4 HISGoldSolid">
+<input type = "text" placeholder = "e.g. '4Pyj'" id = "paymentByWeChat" class = "form-control">
+<button id = "submitWeChatSearch">Search by WeChat</button>    
+</div> 
+    {{/if}}
+</div>    
+<div class = "row">
+<div class = "col-md-8 col-md-offset-2 gray-bg">
+    {{#if searchObject}}
+    Pay Type:
+<select id = "paymentTypeSelect">
+<option>Direct</option>
+    {{#if isWechatUser}}
+<option>WeChat</option>
+    {{/if}}
+</select>
+<table class = "table">
+<tr><td>Total Fee: {{totalFee}} RMB</td><td></td><td></td><td></td></tr>
+ {{#each retrievedRecords}}
+<tr>
+<td><a href = "/registration/edit/{{_id}}">{{runnerFirstName}} {{runnerLastName}}</a>, {{runnerRegistrationCode}}</td>
+
+<td>{{runnerFee}} RMB</td>    
+<td>{{{runnerPaidStatus}}}</td>
+<td><button class = "paidToggle">Toggle Paid/Unpaid</button></td>     
+</tr>
+    {{/each}}
+</table>
+Pay Date:<input type = "date" value = "{{currentDate}}" id = "paymentDate">
+
+    {{/if}}
+</div>    
+</div> 
+   
+    
+</div>
+</template>
+
+
+
+
+<template name = "registrationSorted5K">
+<div id = "sortedRegistration5K">
+<table id = "sortedTable5K">
+<thead><td>Number</td><td>Name</td><td>Gender</td><td>Age Group</td><td>Shirt Size</td></thead>
+  
+    {{#each runners}}
+    <tr><td>{{runnerBibNumber}}</td><td>{{runnerFirstName}} {{runnerLastName}}</td><td>{{runnerGender}}</td><td>{{runnerAgeGroup}}</td><td>{{runnerShirtSize}}</td></tr>
+    {{/each}}
+</table> 
+</div>
+
+</template>
+<template name = "registrationSorted1K">
+<div id = "sortedRegistration1K">
+<table id = "sortedTable1K">
+<thead><td>Number</td><td>Name</td><td>Gender</td><td>Age Group</td><td>Shirt Size</td></thead>
+  
+    {{#each runners}}
+    <tr><td>{{runnerBibNumber}}</td><td>{{runnerFirstName}} {{runnerLastName}}</td><td>{{runnerGender}}</td><td>{{runnerAgeGroup}}</td><td>{{runnerShirtSize}}</td></tr>
+    {{/each}}
+</table> 
+</div>
+
+</template>
+
+<template name = "raceDisclaimer">
+<div id = "confirmationDisclaimer">
+<h4>
+<input type = "checkbox" id = "raceDisclaimerSelect">    I wish to enter the 8th Annual HIS 5K Dragon Run/Fun Run. I am medically fit to run or walk the distance involved and will not hold the organizers or sponsors responsible for any injury or loss to my property or person, however caused, before, during, or after the event. Children of 16 years and under may participate only with the consent of a parent/guardian. I understand that the course is open to all traffic.
+</h4>        
+    </div>
+
+
+</template>
+
+
+<template name = "registerAccount">
+<div class = "HISGoldSolid">
+<div class = "row">
+<div class = "col-md-8 col-md-offset-2">
+    {{>atForm state='signUp'}}
+</div>    
+</div>    
+</div>
+    
+</template>
+    
+<template name = "signInAccount">
+<div class = "HISGoldSolid">
+<div class = "row">
+<div class = "col-md-8 col-md-offset-2">
+    {{>atForm state='signIn'}}
+</div>    
+</div>    
+</div>
+
+
+</template>
+
+<template name = "userPortal">
+
+<div class = "row">
+<div class = "col-md-8 col-md-offset-2">
+<hr>
+<!--div class = "row">
+<div class = "col-md-4">
+<button class = "btn-xtra-lg portalButton" id = "addRunnerRegistration"><span class = "glyphicon glyphicon-plus"></span>New Runner</button>
+</div>
+<div class = "col-md-8 HISGold">
+<span class = "glyphicon glyphicon-heart"></span> <input type = "checkbox" id = "volunteerCheckbox"> <small>Add {{userEmail}} to the Dragon Run Volunteer Email list  </small>
+</div>
+</div-->
+<h3 class = "HISGold">My registered runners:</h3>
+<table class = "table">
+ {{#each myRegistrations}}
+    {{>myRegistrationItem}}
+{{/each}}    
+</table>
+<span class = "HISGold">Total Payment: {{myTotalPayment}} RMB for {{userEmail}}</span>   
+</div>    
+</div>
+    {{>pickUpInformation}}
+
+</template>
+
+<template name = "myRegistrationItem">
+
+<tr class = "HISBlue gray-bg">
+<td>{{runnerFullName}}: {{{runnerPaidStatus}}}
+    <br>
+Registration Code: {{runnerRegistrationCode}} </td> 
+ 
+
+<td>Runner Number: <b><span class = "text-success">{{runnerBibNumber}}</span></b></td>
+</tr>
+</template>
+
+<template name = "paymentPeriodComplete">
+<div class = "container">
+<hr>    
+<div class = "row gray-bg">
+<div class = "col-md-12 gray-bg">
+<h2>The Dragon Run/ Fun Run race payment and registration period has closed, but the race is one of many things happening at HIS on May 30th.
+    <p></p>
+    Join us on May 30th for games, raffle prizes, shopping, food, and fun!</h2>
+</div>    
+</div>
+</div>
+</template>
+
+<template name = "paymentOptions">
+<div class = "container">
+<hr>
+<div class = "row gray-bg">
+<div class = "col-md-5 col-md-offset-1 gray-bg">
+<h2>Paying in person</h2>
+<h4>You can pay for all of the above registrations under the email address of the account you used to register.<p></p>
+Please mark an envelope with  <span class = "text-success">'{{userEmail}}'</span> and put your total fee of (<span class = "text-success">{{userTotal}} RMB</span>) inside. You can bring this envelope to the HIS front desk and we will process your payment as soon as we can. 
+<p></p>
+    
+An individual can also pay for his/her registration total using the <span class = "text-success">registration code</span> listed in the table above.
+    </h4>
+</div>
+<div class = "col-md-5  gray-bg">
+<h2>Paying via WeChat</h2>
+<h4>Enter the WeChat Name (not ID) for the account you are using to pay.<p></p> <strong>Please make sure the name matches your WeChat information exactly, or we will have difficulty matching your payment with the registration information above.</strong></h4>
+<input type = "text" id = "userWeChat" placeholder = "WeChat Name" class = "form-control"><button id = "setWeChatID">Set WeChat Name</button>
+    <p></p>
+    
+     
+ {{#if userWeChat}}
+    WeChat Name:  <span class = "text-danger">{{userWeChat}}</span>
+    <p></p>
+    Open this in the WeChat app to make your payment. To help with the process, please email a screen-shot of your payment within the WeChat app to Peggy Pan at <span class = "text-info">ppan@scischina.org</span>.
+    <br>
+    
+     <img src = "/5KWeChat.png">  
+   
+    {{/if}}
+</div> 
+</div>
+</div>  
+</template>
+
+<template name = "pickUpInformation">
+<div class = "container">
+<hr>    
+<div class = "row gray-bg">
+<div class = "col-md-12 gray-bg">
+<h2>Bag/Shirt Pick-up Information:</h2>
+    
+<div class = "row">
+<div class = "col-md-6 col-md-offset-3 outline">
+IMPORTANT: You will need to know the race numbers (listed above) to collect your Dragon Run race number bib, timing chip, bag and shirt.    
+    
+</div>    
+    
+</div>
+    <p></p>
+<ul>
+    
+<li>Friday* in the Auditorium - 7.30-8.30am & 2.30-3.30pm</li>    
+<li>Saturday (race day) - 7.00-7.30am</li>    
+</ul>
+
+
+*Lower School students will not be allowed to collect Dragon Run bags without an adult. 
+<p></p>
+
+**Upon collection, it will be your responsibility to bring your race number and timing chip to the Dragon Run. 
+
+<p></p>
+
+重要提示： 请记住你们参赛号码并凭参赛号码来领取你的比赛号码牌、 计时器、 袋子和参赛服。<p></p>
+ 
+袋子和参赛服领取时间：<p></p>
+
+    <ul>
+<li>周五 在礼堂 早上7:30到8:30 & 下午2.30-3.30</li>
+<li>星期六 (参赛当日) 早上7:00到7:30</li>
+ </ul>
+    
+* 低年级的参赛者请在家长的陪同下来领取你们的袋子和参赛服。<p></p>
+* * 其他高年级，请自己把5千米赛跑的号码牌，计时器，袋子和参赛服带来学校。
+</div>    
+</div>
+</div>
+
+
+
+</template>
+
+<template name = "privacy">
+<div class = "gray-bg">
+We ask you to create an account for registration to protect your information submitted through this system. This information is stored within our system using commercially available encryption and other safeguards. You are responsible for maintaining the security of your account by using a secure password and sharing it only with those that are authorized to use this site on your behalf.
+    <p></p>
+We will use the information submitted through this website only for purposes related to the 8th Annual HIS Dragon Run. This includes:
+    <ul>
+        <li>processing, storing, and retrieving registration information related to your participation in the event </li>
+        <li>assisting with the payment of any related fees related to the above event </li>
+        <li>sharing results of the race</li>
+        <li>transmitting information to you and runners that you register about the event</li>
+    
+    </ul>
+
+    Under no circumstances will the information transmitted to this site be shared with a third party, nor will it be used for any purpose beyond those described above.
+    
+If you have any concerns about how this information will be used, please send an email to  <span class = "text-info">20155kdragonrun@SCISHIS.onmicrosoft.com</span>. 
+</div>
+<div class = "row">
+<div class = "col-md-6">
+<h3><a href = "/sign-up"> <span class = "glyphicon glyphicon-arrow-left"></span> Go Back </a></h3>   
+</div>    
+</div>
+</template>
+
+<template name = "termsOfUse">
+
+<div class = "gray-bg">
+
+</div>    
+
+<div class = "row">
+<div class = "col-md-6">
+<h3><a href = "/sign-up"><span class = "glyphicon glyphicon-arrow-left"></span> Go Back </a></h3>   
+</div>    
+</div>
+
+</template>
+
+<template name = "adminTemplate">
+<div class = "row">
+<div class = "col-md-12 gray-bg">
+{{>accountsAdmin}}    
+</div>    
+</div>
+    
+
+
+</template>
+
+<template name = "registrationList">
+
+<div id = "registrationList">
+    Total Registered: {{numberRegistered}} <p></p>
+    <a href = "/unpaidRunnerEmailList/">Not Paid ({{numberUnpaid}}):</a>
+    <table>
+    {{#each notPaidRunners}}
+    <tr><td>{{registrationEmail}}</td>
+    <td>
+    <a href = "/registration/edit/{{_id}}/">{{runnerFirstName}} {{runnerLastName}} - {{runnerRegistrationCode}} </a>
+    </td>
+     {{#if isAdminUser}}
+    <td><button class = "deleteRunner"></button></td>
+    <td><button class = "sendPaymentEmail">Send Payment Email</button></td>
+         {{/if}}
+    </tr>
+    
+    {{/each}}
+    </table>
+    Paid ({{numberPaid}}):
+    <table>
+    {{#each paidRunners}}
+     <tr><td>{{registrationEmail}}</td>
+         <td>
+    <a href = "/registration/edit/{{_id}}/">{{runnerFirstName}} {{runnerLastName}} - {{runnerRegistrationCode}} </a>
+    </td><td>{{dateString}}</td><td>{{paymentEnteredBy}}</td>
+     {{#if isAdminUser}}
+    
+    <td><button class = "sendPaymentEmail">Pickup</button></td>
+         {{/if}}    
+    </tr>
+    {{/each}}
+    </table>
+</div>
+    
+
+</template>
+
+<template name = "paymentRecordWeChat">
+<div id = "paymentList">
+<div class = "row">
+<div class = "col-md-6 col-md-offset-3">
+<table class = "table">
+    {{#each WeChatPayment}}
+<tr>
+<td>{{paymentDateText}}</td><td>{{WeChatID}}</td><td>{{paymentRegistrationEmail}}</td><td>{{paymentAmount}}</td>
+</tr>    
+    {{/each}}
+</table> 
+<h3>Total Collected: {{totalCollected}} RMB</h3>
+</div>    
+</div>
+  
+</div>
+</template>
