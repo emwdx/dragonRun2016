@@ -199,7 +199,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/" id = "brand-link"><strong>HIS Charity Run 2016</strong></a>
+            <a class="navbar-brand" href="/registration/" id = "brand-link"><strong>HIS Charity Run 2016</strong></a>
 
 
              <span class = "navbar-brand" >
@@ -212,7 +212,8 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
 
-              <li class="active"><a href="/">Home</a></li>
+              
+              <!--
               <li class = "dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Information<span class="caret"></span></a>
                <ul class = "dropdown-menu" role = "menu">
@@ -222,6 +223,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
 
               </ul>
               </li>
+              -->
 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registration <span class="caret"></span></a>
@@ -394,207 +396,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
 
 </template>
 
-<template name = "raceConfiguration">
-<div id = "raceConfiguration">
-Connection to server: {{connectedToServer}}<p></p>
 
-
-<button class = "btn" id = "addRunners">Add runners</button><p></p>
-<ul id = "raceConfigurationPageList">
-<li><a href = "/allActiveRunners/">All active runners</a></li>
-<li><a href = "/flaggingRunners7/">Flag active runners</a></li>
-<li><a href = "/emergency/">Emergency Contact List</a></li>
-Stopped Runners:
-<li><a href = "/stoppedRunners/">All stopped runners</a></li>
-<li><a href = "/stoppedRunners/number/">Stopped runners by number</a></li>
-<li><a href = "/results/adult/male/">Adult Male</a></li>
-<li><a href = "/results/adult/female/">Adult Female</a></li>
-<li><a href = "/results/HS/male/">HS Male</a></li>
-<li><a href = "/results/HS/female/">HS Female</a></li>
-<li><a href = "/results/MS/male/">MS Male</a></li>
-<li><a href = "/results/MS/female/">MS Female</a></li>
-<li><a href = "/results/LS/male/">LS Male</a></li>
-<li><a href = "/results/LS/female">LS Female</a></li>
-</ul>
-    <hr>
-{{#unless raceIsStarted}}
-<select id = "confirmStartRace">
-<option value = "">Confirm Race Start?</option>
-<option value = "1">Yes!</option>
-
-</select>
-<button class = "btn" id = "raceStartButton">Start Race</button>
-<p></p>
-    {{/unless}}
-    {{#if raceIsStarted}}
-    <button class = "btn" id = "raceStopButton">Stop Race</button>
-    {{#with raceTime}}
-    <h2>Elapsed Race Time: <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span></h2>
-    {{/with}}
-    {{/if}}
-
-</div>
-
-
-
-</template>
-
-
-<template name = "allActiveRunners">
-<div class = "resultsList">
-    Total Runners: {{numberActiveRunners}} <p></p>
-    <a href = "/unpaidRunnerEmailList/">Not Stopped ({{numberNotStopped}}):</a>
-    <table>
-    {{#each notStoppedRunners}}
-    <tr><td>
-    {{runnerNumber}} - {{runnerName}}
-    </td>
-    </tr>
-
-    {{/each}}
-    </table>
-    Stopped({{numberStoppedRunners}}):
-    <table>
-    {{#each stoppedRunners}}
-     <tr><td>
-    {{runnerNumber}} - {{runnerName}} - {{runnerStopTime}}
-    </td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-
-</template>
-
-
-<template name = "officialRaceTime">
-<div id = "officialRaceTime">
-<h1 class = "centerText"> Official Dragon Run Time:</h1>
-{{#with raceTime}}
-    <div id = "officialRaceTimeBlock" class = "centerText">
-        <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span></div>
-{{/with}}
-</div>
-</template>
-
-<template name = "stoppedRunners">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - All Runners by Time</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersByNumber">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - All Runners by Number</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersAdultMale">
-<div class = "resultsList col-md-6 HISGoldSolid">
-    <p class = "centerText">5K Dragon Run Results - Adult Male</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersAdultFemale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - Adult Female</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersHSMale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - High School Male</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersHSFemale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - High School Female</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-<template name = "stoppedRunnersMSMale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - Middle School Male</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersMSFemale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - Middle School Female</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersLSMale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - Lower School Male</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
-
-<template name = "stoppedRunnersLSFemale">
-<div class = "resultsList">
-    <p class = "centerText">5K Dragon Run Results - Lower School Female</p>
-    <table class = "resultsTable">
-    {{#each stoppedRunners}}
-     <tr><td>{{runnerNumber}}</td><td>{{runnerName}}</td> <td>{{runnerStopTimeString}}</td>
-    </tr>
-    {{/each}}
-    </table>
-</div>
-</template>
 
 <template name = "emergencyContactList">
 <div class = "resultsList">
@@ -610,119 +412,6 @@ Stopped Runners:
 </div>
 </template>
 
-
-<template name = "flaggingRunners">
-<div id = "flaggingRunners">
-    {{>smallRaceTime}}
-    {{#if connectedToServer}}
-Enter the number of the spotted runner here:
-<form id = "flagRunnersForm">
-<input type = "number" max="800" min = "500" id = "flaggingRunnersInput"><button id = "flaggingRunnersButton" type = "submit">Flag Runner</button>
-
-
-</form>
-{{/if}}
-Number of spotters: {{numOfSpotters}}<br>
-Current spotter index: {{currentSpotterIndex}}
-
-<table>
-<tr>
-<td><a href = "/flaggerNumber/1/">Spotter 1:</a></td><td><a href = "/flaggerNumber/2/">Spotter 2:</a></td><td><a href = "/flaggerNumber/3/">Spotter 3:</a></td><td><a href = "/flaggerNumber/4/">Spotter 4:</a></td>
-</tr>
-<tr>
-<td>{{#each spotter1Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter2Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter3Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter4Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-</tr>
-
-
-</table>
-    {{#unless connectedToServer}}
-    Connecting to server....
-    {{/unless}}
-</div>
-
-</template>
-
-<template name = "missionControl">
-<div id = "flaggingRunnersLeft">
-<table >
-<tr><td class = "estimatedTimeTable">Below 20</td><td class = "estimatedTimeTable">20-25</td>
-    <td class = "estimatedTimeTable">25-30</td><td class = "estimatedTimeTable">Over 30</td>
-</tr>
-<tr><td class = "estimatedTimeTable">{{#each runnersET1}}<button class = "flaggingRunnersEstimatedTime">F</button>{{runnerNumber}}<br>{{/each}}</td>
-    <td class = "estimatedTimeTable">{{#each runnersET2}}<button class = "flaggingRunnersEstimatedTime">F</button>{{runnerNumber}}<br>{{/each}}</td>
-    <td class = "estimatedTimeTable">{{#each runnersET3}}<button class = "flaggingRunnersEstimatedTime">F</button>{{runnerNumber}}<br>{{/each}}</td>
-    <td class = "estimatedTimeTable">{{#each runnersET4}}<button class = "flaggingRunnersEstimatedTime">F</button>{{runnerNumber}}<br>{{/each}}</td>
-</tr>
-</table>
-</div>
-<div id = "flaggingRunnersRight">
-    {{>smallRaceTime}}
-    {{#if connectedToServer}}
-Enter the number of the spotted runner here:
-<form id = "flagRunnersForm">
-<input type = "number" max="800" min = "500" id = "flaggingRunnersInput"><button id = "flaggingRunnersButton" type = "submit">Flag Runner</button>
-
-
-</form>
-{{/if}}
-Number of spotters: {{numOfSpotters}}<br>
-Current spotter index: {{currentSpotterIndex}}
-
-<table>
-<tr>
-<td><a href = "/flaggerNumber/1/">Spotter 1:</a></td><td><a href = "/flaggerNumber/2/">Spotter 2:</a></td><td><a href = "/flaggerNumber/3/">Spotter 3:</a></td><td><a href = "/flaggerNumber/4/">Spotter 4:</a></td>
-</tr>
-<tr>
-<td>{{#each spotter1Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter2Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter3Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-<td>{{#each spotter4Numbers}}<button class = "flaggingRunnersRemoveFlag">R</button>{{runnerNumber}}
-    <button class = "flaggingRunnersStopButton">S</button><br>{{/each}}</td>
-</tr>
-<tr><td>Stopped Runners:</td></tr>
-<tr>
-<td>Spotter 1:</td><td>Spotter 2:</td><td>Spotter 3:</td><td>Spotter 4:</td>
-</tr>
-<tr>
-<td>{{#each spotter1NumbersStopped}}<button class = "flaggingRunnersOopsButton">X</button>{{runnerNumber}} - {{runnerStopTimeString}}<br>{{/each}}</td>
-<td>{{#each spotter2NumbersStopped}}<button class = "flaggingRunnersOopsButton">X</button>{{runnerNumber}} - {{runnerStopTimeString}}<br>{{/each}}</td>
-<td>{{#each spotter3NumbersStopped}}<button class = "flaggingRunnersOopsButton">X</button>{{runnerNumber}} - {{runnerStopTimeString}}<br>{{/each}}</td>
-<td>{{#each spotter4NumbersStopped}}<button class = "flaggingRunnersOopsButton">X</button>{{runnerNumber}} - {{runnerStopTimeString}}<br>{{/each}}</td>
-</tr>
-
-</table>
-    {{#unless connectedToServer}}
-    Connecting to server....
-    {{/unless}}
-</div>
-
-</template>
-
-
-
-<template name = "flaggerPortal">
-<div id = "flaggedRunnersList">
-
- {{>smallRaceTime}}
-    {{#each flaggedRunnerNumbers}}
-
-    <button class = "flaggedRunnersButton">{{runnerNumber}}</button><p></p>
-    {{/each}}
-
-
-</div>
-
-</template>
 
 <template name = "loading">
 <div id = "loading">
@@ -759,69 +448,4 @@ Current spotter index: {{currentSpotterIndex}}
     <h3 id = "smallRaceTimeBlock" class = "centerText"> <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span> <span id = "connectionIndicator" style="background:{{connection}}">O</span></h3>
 {{/with}}
 </div>
-</template>
-
-<template name = "raceResults">
-<div id = "resultsMainPage">
-<p ><h2 class = "centerText">2015 5K Dragon Run Results</h2></p>
-<h4 class = "centerText">Thank you to everyone who participated! Here are the results for the 5K Race:</h4>
-<h3>
-<ul>
-
-<li><a href = "/5kResultsbyNumber.pdf">Race times by number</a></li>
-<li><a href = "/5KAdultMenResults.pdf">Adult Male</a></li>
-<li><a href = "/5KAdultWomenResults.pdf">Adult Female</a></li>
-<li><a href = "/5KHSBoysResults.pdf">HS Male</a></li>
-<li><a href = "/5KHSGirlsResults.pdf">HS Female</a></li>
-<li><a href = "/5KMSBoysResults.pdf">MS Male</a></li>
-<li><a href = "/5KMSGirlsResults.pdf">MS Female</a></li>
-<li><a href = "/5KLSBoysResults.pdf">LS Male</a></li>
-<li><a href = "/5KLSGirlsResults.pdf">LS Female</a></li>
-</ul>
-</h3>
-
-</div>
-
-</template>
-
-<template name = "raceRouteInformation">
-<div class = "row">
-<div class = "col-md-8 col-md-offset-2 HISGoldSolid">
-<h2>Important Race Information</h2>
-<ul>
-<li>Please be at the starting line (beside the HIS gym) by 7:50am. </li>
-<li>Line up at the appropriate sign post based on your predicted race time (signs will be posted at the start line)</li>
-<li>Volunteers will be on the course to help direct you throughout the race</li>
-<li>You must get a marker line on your number bib at the turn around on the river, volunteers will be there to mark your bib to show you reached the turnaround</li>
-<li>There will be a water station shortly after your turn on to the river</li>
-<li>Runners are to stay on the sidewalks or bike lanes whenever possible</li>
-<li>Once you have finished the race, clear out of the way so that you do not interfere with the other runners crossing the finish line</li>
-</ul>
-<img src = "/raceroute.jpg" class="img-responsive img-rounded">
-</div>
-</div>
-
-</template>
-
-<template name = "raceDaySchedule">
-<div class = "row">
-<div class = "col-md-8 col-md-offset-2 HISGoldSolid">
-<h2>Schedule of Events:</h2>
-<table>
-<tr><td>6:30am – 7:30am</td><td>Bag Pickup & Same-Day Registration</td></tr>
-<tr><td>8:00 am </td><td>5K Race Starts</td></tr>
-<tr><td>8:10 am</td><td>Fun Run Starts</td></tr>
-<tr><td>9:00 am</td><td>Raffle Drawings & Awards (Blue Top) </td></tr>
-<tr><td>9:30 am</td><td>Barbecue Begins</td></tr>
-<tr><td>10:00 am-11:30am</td><td>Music (Blue Top)</td></tr>
-<tr><td>11:30 am</td><td>Karaoke (Blue Top)</td></tr>
-<tr><td>12:00 pm</td><td>Dragon Run Ends</td></tr>
-
-</table>
-
-The HIS Parents and Friends Association (PAFA) will also be hosting games and activities during the day from 8:30 am - 12:00 pm. Don't forget to visit the vendor tables in the gym!
-
-</div>
-</div>
-
 </template>

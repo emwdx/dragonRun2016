@@ -1,0 +1,36 @@
+<template name = "raceConfiguration">
+<div id = "raceConfiguration">
+Connection to server: {{connectedToServer}}<p></p>
+
+    <hr>
+{{#unless raceIsStarted}}
+<select id = "confirmStartRace">
+<option value = "">Confirm Race Start?</option>
+<option value = "1">Yes!</option>
+
+</select>
+<button class = "btn" id = "raceStartButton">Start Race</button>
+<p></p>
+    {{/unless}}
+    {{#if raceIsStarted}}
+    <button class = "btn" id = "raceStopButton">Stop Race</button>
+    {{#with raceTime}}
+    <h2>Elapsed Race Time: <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span></h2>
+    {{/with}}
+    {{/if}}
+
+</div>
+
+
+
+</template>
+
+<template name = "officialRaceTime">
+<div id = "officialRaceTime">
+<h1 class = "centerText"> Official Dragon Run Time:</h1>
+{{#with raceTime}}
+    <div id = "officialRaceTimeBlock" class = "centerText">
+        <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span></div>
+{{/with}}
+</div>
+</template>
