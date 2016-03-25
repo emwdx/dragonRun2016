@@ -1,8 +1,3 @@
-Runners = new Meteor.Collection('runners');
-systemVariables = new Meteor.Collection('systemVariables');
-RaceRunners = new Meteor.Collection('racerunners');
-Payments = new Meteor.Collection('payments');
-
 var mySubmitFunc = function(error, state){
   if (!error) {
     if (state === "signIn") {
@@ -15,28 +10,9 @@ var mySubmitFunc = function(error, state){
 };
 
 
-
-AccountsTemplates.configureRoute('signIn', {
-    name: 'signIn',
-    path: '/sign-in',
-    template:'signInAccount',
-    redirect: '/portal/'
+AccountsTemplates.configure({
+    defaultLayout: 'main',
 });
-
-AccountsTemplates.configureRoute('signUp', {
-    name: 'signUp',
-    template:'registerAccount',
-    path:'/sign-up',
-    redirect: '/registration/'
-});
-
-
-
-AccountsTemplates.configureRoute('forgotPwd', {
-    name: 'resetPwd',
-    redirect: '/reset-password/'
-});
-
 
 
 AccountsTemplates.configure({
@@ -44,7 +20,7 @@ AccountsTemplates.configure({
     confirmPassword: true,
     enablePasswordChange: true,
     forbidClientAccountCreation: false,
-    overrideLoginErrors: true,
+    overrideLoginErrors: false,
     sendVerificationEmail: true,
     lowercaseUsername: false,
 
@@ -84,8 +60,37 @@ AccountsTemplates.configure({
       },
       title: {
           forgotPwd: "Recover Your Password",
-          signUp: "Please create an account to register for the Dragon Run:",
+          signUp: "Please create an account to register for this year's HIS Charity Dragon Run:",
           signIn:"Please sign in to continue:"
       },
     },
+});
+
+AccountsTemplates.configureRoute('signIn', {
+    name: 'signIn',
+    path: '/sign-in',
+    template:'signInAccount',
+    redirect: '/portal/'
+});
+
+AccountsTemplates.configureRoute('signUp', {
+    name: 'signUp',
+    template:'registerAccount',
+    path:'/sign-up',
+    redirect: '/sign-in'
+});
+
+
+
+AccountsTemplates.configureRoute('resetPwd', {
+    name: 'resetPwd',
+    template:'reset-password',
+    path: '/reset-password/'
+});
+
+
+AccountsTemplates.configureRoute('forgotPwd', {
+    name: 'forgotPwd',
+    template:'forgot-password',
+    path: '/forgot-password/'
 });

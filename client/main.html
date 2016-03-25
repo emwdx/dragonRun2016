@@ -212,7 +212,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
 
-              
+
               <!--
               <li class = "dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Information<span class="caret"></span></a>
@@ -229,7 +229,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registration <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <!--<li><a href="/registration/">Register a Runner</a></li>-->
-                  <li><a href="/portal/">See My Registrations</a></li>
+                  <li><a href="/">See My Registrations</a></li>
                     {{#if isStaffUser}}
                     <li><a href = "/registration/list/">Registration List</a></li>
                     <li><a href="/registrationSummary/">Registration Summary</a></li>
@@ -253,15 +253,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
                     </li>
                 {{/if}}
             </ul>
-            <ul class = "nav navbar-nav pull-right small">
 
-            <li><small>Language:</small>
-                   <select id = "selectLang">
-          <option value = "EN">EN</option>
-          <option value = "ZH">中文</option>
-          </select>
-                </li>
-            </ul>
 
           </div><!--/.nav-collapse -->
 
@@ -448,4 +440,13 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
     <h3 id = "smallRaceTimeBlock" class = "centerText"> <span id = "raceElapsedTime">{{minutes}}:{{seconds}}</span> <span id = "connectionIndicator" style="background:{{connection}}">O</span></h3>
 {{/with}}
 </div>
+</template>
+
+<template name = "resetPwd">
+  <div class = "row">
+  <div class = "col-md-6 col-md-offset-3 HISGoldSolid jumbotron text-center">
+   {{> atForm state='forgotPwd'}}
+  </div>
+  </div>
+
 </template>
