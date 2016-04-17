@@ -1,13 +1,5 @@
 
 
-var currentAge = '-1';
-
-
-
-
-
-
-if (Meteor.isClient) {
 
 Session.set("selectedRace",'');
 Session.set("showSubmitButton","false");
@@ -81,48 +73,11 @@ Template.raceConfiguration.events({
    'click #raceStopButton':function(e){
     e.preventDefault();
     Meteor.call('stopRace');
-   },
-    'click #addRunners':function(e){
- e.preventDefault();
- var allRunners = RaceRunners.find();
- allRunners.forEach(function(runner){
-
- RaceRunners.remove({_id:runner._id});
-
-    });
-
- var allRunners = Runners.find({runnerHasPaid:true,runnerRaceSelected:"5K Dragon Run"});
-
- allRunners.forEach(function(runner){
-
-
- var raceRunnerObject = {
-
- runnerName: (runner.runnerFirstName + ' ' + runner.runnerLastName),
- runnerNumber: runner.runnerBibNumber,
- runnerIsFlagged: false,
- runnerIsStopped:false,
- runnerFlagAssignment:"-1",
- runnerStopTime: 0,
- runnerEstimatedTime: runner.runnerEstimatedTime,
- runnerAge: runner.runnerAge,
- runnerGender: runner.runnerGender
-
- }
-
- RaceRunners.insert(raceRunnerObject);
-
+   }
  });
 
- var numOfSpotters = systemVariables.findOne({name:"numOfSpotters"})
- systemVariables.update({_id:numOfSpotters._id},{$set:{value:4}})
- var currentSpotterIndex = systemVariables.findOne({name:"currentSpotterIndex"})
- systemVariables.update({_id:currentSpotterIndex._id},{$set:{value:1}})
 
 
-}
-
-});
 
 Template.raceConfiguration.helpers({
 raceIsStarted: function(){
@@ -145,23 +100,29 @@ return {minutes:minuteString,seconds:secondString};
 },
 connectedToServer:function(){
  return Meteor.status().status;
- },
-serverTime: function(){
- var clientTime = parseInt(Session.get('time'));
- return TimeSync.serverTime(clientTime);
+ }
 
-},
-clientOffset: function(){
-Session.set("serverOffset",TimeSync.serverOffset());
-var offset = Session.get("serverOffset");
-return offset;
-}
 
 });
 
 
 Template.officialRaceTime.helpers({
-raceTime:raceTime
+raceTime:function(){
+
+  var currentTime = Session.get('time');
+  var raceStartTime = systemVariables.findOne({name:"raceStartTime"});
+  if(!raceStartTime){return 'not found'}
+  var elapsedTime = (currentTime - raceStartTime.value);
+  minutes = Math.floor(elapsedTime/60000);
+  seconds = Math.floor(((elapsedTime/60000)-Math.floor(elapsedTime/60000))*60)
+  if(seconds<=9){var secondString = '0'+seconds.toFixed(0).toString()}
+  else{var secondString = seconds.toFixed(0).toString();}
+  if(minutes<9){var minuteString = '0'+minutes.toString()}
+  else{var minuteString = minutes.toString();}
+  return {minutes:minuteString,seconds:secondString};
+
+
+}
 
 });
 
@@ -178,7 +139,7 @@ else{return "red"}
 
 });
 
-}
+
 
 function raceTime(){
 var clientTime = parseInt(Session.get('time'));

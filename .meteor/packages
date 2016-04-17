@@ -3,18 +3,19 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+standard-app-packages
 jquery
 email
 accounts-password
 accounts-ui
+
+blaze
 iron:router
 reactive-var
 twbs:bootstrap
 mrt:accounts-admin-ui-bootstrap-3
 useraccounts:bootstrap
 alanning:roles
-standard-minifiers
-meteor-base
-session
+meteorhacks:ssr
 useraccounts:iron-routing
-blaze-html-templates
+sacha:spin

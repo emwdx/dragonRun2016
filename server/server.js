@@ -7,6 +7,8 @@
 
     }
 
+
+
   var adminUser = Meteor.users.findOne({username:'admin'});
 
  if (Meteor.users.findOne(adminUser._id)){
@@ -31,10 +33,10 @@ Meteor.publish('runners', function(publishLimit,options) {
     if(this.userId){
     var currentUser = Meteor.users.findOne({_id:this.userId});
     if(Roles.userIsInRole(this.userId,['staff','admin'])){
-    return Runners.find({year:2015},options);
+    return Runners.find({year:2016},options);
     }
     else{
-        return Runners.find({year:2015,registrationEmail:currentUser.emails[0].address},options);
+        return Runners.find({year:2016,registrationEmail:currentUser.emails[0].address},options);
 
 
     }
@@ -84,22 +86,26 @@ return null;
 
 
 Meteor.methods({
- /*
+
   sendEmail: function (to, from, subject, text) {
     check([to, from, subject, text], [String]);
 
-    // Let other method calls from the same client start running,
-    // without waiting for the email sending to complete.
-    this.unblock();
+if(Roles.userIsInRole(this.userId,['admin'])){
 
-    Email.send({
-      to: to,
-      from: from,
-      subject: subject,
-      text: text
-    });
+  this.unblock();
+
+  Email.send({
+    to: to,
+    from: from,
+    subject: subject,
+    text: text
+  });
+
+      }
+
+
   },
-  */
+
 
   startRace: function(){
       this.unblock();
@@ -116,20 +122,19 @@ Meteor.methods({
       systemVariables.update({name:"raceHasStarted"},{$set:raceHasStoppedObject});
 
 
-  },
 
- sendPaymentEmail: function(registrationEmail){
-  this.unblock();
-  if(Roles.userIsInRole(this.userId,['admin','staff'])){
-  var html = SSR.render("mustPayTXT");
-  Email.send({
-      to: registrationEmail,
-      from: '2015dragonsquad@SCISHIS.onmicrosoft.com',
-      subject: '2015 Dragon Run/Fun Run Registration',
-      text: html
-    });
 
-  }
+
+
+ },
+ sendVerifyEmail:function(userId){
+   this.unblock();
+
+var email = Meteor.users.findOne({_id:userId});
+
+  Accounts.sendVerificationEmail(email._id,email.emails[0].address);
+  return "Email sent!";
+
 
  }
 });
@@ -238,4 +243,34 @@ user.roles = ['race-runner'];
 return user;
 });
 
-SSR.compileTemplate('mustPayTXT', Assets.getText('email.html'));
+
+
+Accounts.emailTemplates.siteName = "HIS Dragon Run Registration";
+Accounts.emailTemplates.from = "HIS Dragon Run Registration Robot <registration-robot@hisdragonrun.org>";
+
+Accounts.emailTemplates.resetPassword = {
+  subject:function(user) {
+    return "Reset your password on http://register.hisdragonrun.org";
+  },
+  text: function(user, url) {
+    return "Hello! Click the link below to reset your Dragon Run registration password. \n"+url+" If you didn't request this email, please ignore it. Do not reply to this email - it was sent by a robot! \n \n  "
+  },
+  html:function(user, url) {
+    // This is where HTML email content would go.
+    // See the section about html emails below.
+  }
+};
+
+Accounts.emailTemplates.verifyEmail = {
+  subject:function (user) {
+    return "Verify Account for " + user.emails[0].address;
+  },
+text:function(user, url) {
+    return "Hello! Click the link below to verify your new account for the HIS Charity Dragon Run Website.\n大家好！点击下面的链接，为5公里赛跑验证您的新帐户。\n" + url+" \n If you didn't request this email, please ignore it. \n 如果您不想参与，请忽略这份邮件。\n  Do not reply to this email - it was sent by a robot! \n 请不要直接回复邮件，这是系统自动发送的。"
+
+  },
+  html:function (user, url) {
+    // This is where HTML email content would go.
+    // See the section about html emails below.
+  }
+};

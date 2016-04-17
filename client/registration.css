@@ -9,19 +9,19 @@
     position: absolute;
     display:block;
     z-index:-1;
-    
+
 }
 
 
 #registrationFormContent{
  width:100%;
- 
+
  margin-top:20px;
  margin-left: 10px;
  margin-right:10px;
  padding:20px;
  z-index:1;
-  
+
 }
 
 #registrationEditFormContent{
@@ -32,84 +32,81 @@
  padding:20px;
  z-index:1;
  color:#FCDC3B;
-      
-    
-    
+margin-bottom:60px;
+
+
 }
 
 .regName{
-    
+
  width:50%;
  margin:5px;
-    
+
 }
 
 #registerAnother{
-    
+
  position:absolute;
  top:20px;
  left:40px;
  float:right;
  font-size:14px;
  color: white;
-    
-    
+
+
 }
 
 #confirmationPageContent{
-    
+
  background-color:white;
  height: 600px;
  margin: 5px;
  padding:10px;
-    
-    
-    
-    
+
+
+
+
 }
 
 #registrationCodeConfirmation{
-    
+
  font-size:55px;
 float:right;
 border: black dotted 1px;
-    
+
 }
 #runnerNameConfirmation{
-    
+
  margin-left:auto;
  margin-right:auto;
  font-size:20px;
  width:50%;
-    
-    
+
+
 }
 #confirmationDisclaimer{
-    
+
  float:right;
- display:block; 
+ display:block;
  width:100%;
  font-size:12px;
-    
-    
-    
-    
+
 }
 
 #registrationNotComplete{
-    
- color:red;    
-    
-    
+
+ color:red;
+
+
 }
 #confirmFloatLeft{
-    
+
      width: 45%;
  margin-left:10px;
  margin-right:10px;
  float:left;
  display:inline-block;
-    
+
 }
 
 #confirmFloatRight{
@@ -119,61 +116,61 @@ width: 45%;
 
  float:right;
  display:inline-block;
- 
-    
-    
-    
+
+
+
+
 }
 .textInput{
-    
+
  width: 80%;
  border: white 3px solid;
  font-size:20px;
  background:none;
  color:#020A66;
-    
+
 }
 
 .textInput:hover{
     border: #EBA100 3px solid;
-    
+
 }
 
 
 #formShirtSize{
- 
-  
-    
+
+
+
 }
 
 #shirtNotice{
- 
+
 }
 
 #shirtSizeConfirmation{
-    
+
  display:none;
-    
+
 }
 
 .formElement{
- 
+
     width:100%;
     margin-left: 10px;
     margin-right: 10px;
-    
+
 }
 #leftColumn{
-    
+
  width: 45%;
  margin-left:10px;
  float:left;
  display:inline-block;
- 
-    
- 
 
-    
+
+
+
+
 }
 
 #rightColumn{
@@ -182,14 +179,14 @@ width: 45%;
 margin-top:10px;
  float:right;
  display:inline-block;
- 
-    
-    
+
+
+
 }
 
 *::-webkit-input-placeholder {
     color: #020A66;
-}    
+}
 *:-moz-placeholder {
     /* FF 4-18 */
     color: #020A66;
@@ -197,30 +194,30 @@ margin-top:10px;
 *::-moz-placeholder {
     /* FF 19+ */
     color: #020A66;
-}    
+}
 *:-ms-input-placeholder {
     /* IE 10+ */
     color: #020A66;
 }
 select{
-    
- width:50%;   
-    
-    
+
+ width:50%;
+
+
 }
 #notReadyYet{
  margin-left:auto;
  margin-right:auto;
- vertical-align:middle    
+ vertical-align:middle
  height:200px;
  width:200px;
  background:#020A66;
  z-index:10;
- 
 
-    
-    
-    
+
+
+
+
 }
 .raceSelect{
  width:150px;
@@ -229,24 +226,24 @@ select{
  border-radius: 5px;
  font-size: 24px;
  margin:10px;
-    
-    
+
+
 }
 
 #selectRaceParagraph{
-    
- margin:20px; 
-    
+
+ margin:20px;
+
 }
 .feeTotals{
-    
- line-height:16px;   
-    
+
+ line-height:16px;
+
 }
 
 
 #submitRegistration{
-    
+
  background-color:#EBA100;
  border: solid 2px #020A66;
  font-size:30px;
@@ -255,10 +252,24 @@ margin-left:auto;
 margin-right:auto;
 border-radius:5px;
 margin-top:30px;
-    
+
 }
-#submitRegistration:hover{
-    
+
+
+#updateRegistration{
+
+ background-color:#EBA100;
+ border: solid 2px #020A66;
+ font-size:30px;
+ height:60px;
+margin-left:auto;
+margin-right:auto;
+border-radius:5px;
+margin-top:30px;
+
+}
+#updateRegistration:hover{
+
  background-color:#020A66;
  border: solid 2px #EBA100;
  color: #EBA100;
@@ -267,31 +278,39 @@ margin-top:30px;
 margin-left:auto;
 margin-right:auto;
 border-radius:5px;
-    
+
 }
 
-#updateRegistration{
-    
- background-color:#EBA100;
- border: solid 2px #020A66;
- color:#020A66;    
-}
-#updateRegistration:hover{
-    
+#submitRegistration:hover{
+
  background-color:#020A66;
  border: solid 2px #EBA100;
  color: #EBA100;
- 
-    
+ font-size:30px;
+ height:60px;
+margin-left:auto;
+margin-right:auto;
+border-radius:5px;
+
+}
+
+
+#updateRegistration:hover{
+
+ background-color:#020A66;
+ border: solid 2px #EBA100;
+ color: #EBA100;
+
+
 }
 
 #additionalDonation:hover{
     border: #EBA100 3px solid;
-    
+
 }
 
 .paymentConfirmationContainer{
-    
+
  width: 400px;
  display:block;
  margin:auto;
@@ -300,27 +319,27 @@ border-radius:5px;
  height:200px;
  background-color:#EBA100;
 
-    
-    
-    
+
+
+
 }
 
 
 #paymentTextInputs{
- 
- width:300px;  
+
+ width:300px;
  border-radius:5px;
  height:36px;
-    
 
-    
+
+
 }
 #paymentConfirmationName{
 
 margin:10px;
 
 
-    
+
 }
 
 #sortedRegistration5K{
@@ -330,22 +349,22 @@ margin:10px;
  float:none;
  background-color:#EBA100;
  color: #020A66;
-    
-    
+
+
 }
 #sortedTable5K{
  width:90%;
  margin-left:auto;
  margin-right:auto;
- float:none;   
+ float:none;
 }
 #sortedTable1K{
  width:90%;
  margin-left:auto;
  margin-right:auto;
- float:none;   
+ float:none;
 }
-    
+
 
 #sortedRegistration1K{
  width:50%;
@@ -354,8 +373,8 @@ margin:10px;
  float:none;
  background-color:#EBA100;
  color: #020A66;
-    
-    
+
+
 }
 
 #login{
@@ -365,13 +384,13 @@ margin:10px;
  margin-bottom:-20px;
 display:flex
     float:none;
-    
-    
+
+
 }
 
 #cameraScan{
-    
- width:400px;   
+
+ width:400px;
 }
 
 .portalButton{
@@ -385,7 +404,33 @@ background-color:#11CC11;
 }
 
 #at-btn{
- 
+
 height:40px;
-    
+
+}
+
+#mainContentSpace{
+
+margin-top:auto;
+margin-bottom:30px;
+height:650px;
+
+}
+
+#site-footer{
+
+padding-top:10px;
+margin-top:50px;
+border-top: 3px solid #020A66;
+}
+
+#paymentOptions{
+
+margin-bottom:60px;
+
+}
+
+body{
+
+  padding-bottom: 70px;
 }

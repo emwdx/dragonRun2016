@@ -8,186 +8,29 @@
 <template name = "main">
 
 {{>header}}
-
+<div class = "container mainContentSpace">
+</div>
 {{>yield}}
 
+{{>footer}}
 
 </template>
 
+<template name = "footer">
 
+    <nav class="navbar navbar-default navbar-fixed-bottom HISGoldSolid " id = "site-footer">
 
-<template name = "frontPage">
- <div class="container">
-     {{#if isEN}}
-     {{>englishFrontPage}}
-     {{/if}}
-     {{#if isZH}}
-     {{>chineseFrontPage}}
-     {{/if}}
-</div>
-</template>
+  <p class = "text-center small">
+      <b>Site built by <a href = "http://www.evanweinberg.com">Evan Weinberg</a>, 2016</b>
+    </p>
 
-<template name = "englishFrontPage">
-
-
-{{>mainInformationEnglish}}
-{{>sponsorsbanner}}
-
-
-
-</template>
-
-<template name = "chineseFrontPage">
-
-
-{{>mainInformationChinese}}
-
-{{>volunteerInterestedChinese}}
+    </nav>
 
 
 </template>
 
 
 
-<template name = "mainInformationEnglish">
-<div class = "row">
-<div class = "col-md-12 HISGoldSolid jumbotron text-center">
-<div class = "row">
-<div class = "col-md-4 text-center">
-<img src = "/dragon5K.jpg" class="img-responsive img-rounded">
-</div>
-<div class = "col-md-8 text-center">
-<h1>8th Annual HIS Dragon Run</h1>
-</div>
-</div>
-
-<h2><strong>Saturday, May 30th, 2015</strong></h2>
-<h4>8:00 AM - 1:00 PM</h4>
-<h2>Hangzhou International School</h2>
-
-<h2>Dragon Run 5K <br> Registration Fee: 100 RMB</h2>
-<h2>Fun Run  <br> Registration Fee: 100 RMB</h2>
-<h3>Proceeds to benefit the Carnations School</h3>
-
-<div class = "row outline">
-<div class = "col-md-4 col-md-offset-4">
-<a href = "/results/">Click here for the results of today's run!</a>
-</div>
-</div>
-</div>
-
-</div>
-</template>
-
-<template name = "sponsorInterestedEnglish">
-
-    <div class = "row">
-<div class = "col-md-12  gray-bg text-center">
-Interested in being a sponsor?
-
-Be a part of the action by donating goods or services.
-<br>
-
-<h4 class = "text-center">Please contact Julie Ly at jly@scischina.org for more sponsorship information.</h4>
-
-<br>
-<span class = "text-info">All sponsor materials due by Friday, May 1st</span>
-
-
-</div>
-</div>
-
-</template>
-
-<template name = "volunteerInterestedEnglish">
-    <div class = "row">
-<div class = "col-md-12  gray-bg text-center">
-Volunteer to be part of the Dragon Run Team.
-
-<h4 class = "text-center">
-Whether you can spare 30 minutes or 6 hours, there are opportunities for you to help!
-<p></p>
-To help in the planning and execution of the 2015 Dragon Run, contact: <br>
-
-Rachel Faust at <span class = "text-info">rfaust@scischina.org</span>
-
-or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <br></h4>
-
-<br>
-
-</div>
-</div>
-
-</template>
-
-<template name = "mainInformationChinese">
-<div class = "row">
-<div class = "col-md-12 HISGoldSolid jumbotron text-center">
-<div class = "row">
-<div class = "col-md-4 text-center">
-<img src = "/dragon5K.jpg" class="img-responsive img-rounded">
-</div>
-<div class = "col-md-8 text-center">
-<h1>第8届杭州国际学校趣味赛跑</h1>
-</div>
-</div>
-
-<h2><strong>星期六, 5月30, 2015</strong></h2>
-<h4>8:00 上午 - 1:00 下午</h4>
-<h2>杭州国际学校</h2>
-
-<h2>5公里趣味赛跑<br> 所有参赛者 报名费 100 人民币</h2>
-<h2>趣味赛跑 <br> 所有参赛者 报名费 100 人民币</h2>
-<h3>所有经费会捐助给康乃馨学校</h3>
-
-<div class = "row outline">
-<div class = "col-md-4 col-md-offset-4">
-<b>注册现已关闭。</b>
-
-</div>
-</div>
-</div>
-
-</div>
-</template>
-
-<template name = "sponsorInterestedChinese">
-
-    <div class = "row">
-<div class = "col-md-12  gray-bg text-center"> 您愿意来赞助吗？  您愿意捐赠一些物品和提供一些服务吗？<br>     <h4 class = "text-center">如果您有不清楚的地方，请联系Julie Ly（jly@scischina.org）询问更多的赞助信息。</h4>  <br>     <span class = "text-info">所有的捐赠款项和捐赠物品必须在五月一日之前完成。</span>          </div> </div>
-</template>
-
-
-<template name = "volunteerInterestedChinese">
-    <div class = "row">
-<div class = "col-md-12  gray-bg text-center">
-志愿者将会成为活动团队的一部分
-
-<h4 class = "text-center">
-无论是花30分钟或是6个小时，您都有机会帮助我们。
-<p></p>
-为帮助组织杭州国际学校5公里趣味赛跑 <br>
-
-如果您有兴趣请联系 <span class = "text-info">rfaust@scischina.org</span>
-
-或者 Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <br>截止至4月30号  </h4>
-
-<br>
-
-</div>
-</div>
-
-</template>
-
-<template name = "sponsorsbanner">
-<div class = "row">
-<div class = "col-md-12 gray-bg text-center">
-    <h2>Event Sponsors:</h2>
-<p class = "text-center"><img src = "sponsors.png" class = "img-responsive text-center" id = "sponsor-image"></p>
-</div>
-</div>
-
-</template>
 
 <template name = "header">
 <nav class="navbar navbar-default HISGoldSolid" id = "site-header">
@@ -199,7 +42,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/registration/" id = "brand-link"><strong>HIS Charity Run 2016</strong></a>
+            <a class="navbar-brand" href="/portal/" id = "brand-link"><strong>HIS Charity Run 2016</strong></a>
 
 
              <span class = "navbar-brand" >
@@ -226,10 +69,10 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
               -->
 
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registration <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Register/注册 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <!--<li><a href="/registration/">Register a Runner</a></li>-->
-                  <li><a href="/">See My Registrations</a></li>
+                  <li><a href="/portal/">See My Registrations/察看注册情况</a></li>
                     {{#if isStaffUser}}
                     <li><a href = "/registration/list/">Registration List</a></li>
                     <li><a href="/registrationSummary/">Registration Summary</a></li>
@@ -246,8 +89,8 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
                 <ul class = "dropdown-menu" role = "menu">
                <li><a href="/admin/">User Panel</a></li>
                 <li><a href="/raceCOnfiguration/">Race Config</a></li>
-                <li><a href="/missionControl/">Mission Control</a></li>
-                <li><a href = "/flaggingRunners7/">Flagging Portal</a></li>
+                <li><a href="/admin/event">Event Config</a></li>
+
                 <li><a href="/officialRaceTime/">Race Clock</a></li>
                 </ul>
                     </li>
@@ -408,6 +251,7 @@ or Miriama Gemmell at <span class = "text-info">mgemmell@scischina.org</span> <b
 <template name = "loading">
 <div id = "loading">
 <h3>Please wait...</h3>
+{{>spinner}}
 </div>
 </template>
 

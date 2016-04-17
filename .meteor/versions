@@ -30,7 +30,6 @@ ejson@1.0.7
 email@1.0.8
 fastclick@1.0.7
 geojson-utils@1.0.4
-hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
@@ -50,8 +49,8 @@ livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
 meteor@1.1.10
-meteor-base@1.0.1
 meteor-platform@1.2.3
+meteorhacks:ssr@2.2.0
 minifiers@1.1.7
 minimongo@1.0.10
 mobile-status-bar@1.0.6
@@ -70,6 +69,7 @@ reactive-var@1.0.6
 reload@1.1.4
 retry@1.0.4
 routepolicy@1.0.6
+sacha:spin@2.3.1
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
@@ -78,7 +78,6 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-app-packages@1.0.6
-standard-minifiers@1.0.2
 templating@1.1.5
 templating-tools@1.0.0
 tracker@1.0.9
