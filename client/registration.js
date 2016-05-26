@@ -654,6 +654,73 @@ return Runners.find({runnerRaceSelected: "Fun Run",runnerShirtSize:"XL",runnerHa
 num1KXXL: function(){
 
 return Runners.find({runnerRaceSelected: "Fun Run",runnerShirtSize:"XXL",runnerHasPaid:true}).count();
+},
+
+usersWithNoRegisteredRunners:function(){
+var users = Meteor.users.find();
+var emails=[];
+users.forEach(function(r){
+  if(Runners.find({registrationEmail:r.emails[0].address}).count()===0){emails.push(r.emails[0].address)}
+})
+var emailString = ""
+emails.forEach(function(e){emailString+=(e+", ")})
+return emailString;
+
+
+},
+
+usersWithUnpaidRunners:function(){
+
+  var emails=[];
+  Runners.find({runnerHasPaid:false}).forEach(function(r){
+    if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}
+  });
+
+
+  var emailString = ""
+  emails.forEach(function(e){emailString+=(e+", ")})
+return emailString;
+
+
+},
+usersWithAllRunnersPaid:function(){
+
+  var emails=[];
+  Runners.find({runnerHasPaid:true}).forEach(function(r){
+    if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}
+  });
+
+
+  var emailString = ""
+  emails.forEach(function(e){emailString+=(e+", ")})
+return emailString;
+
+
+
+},
+usersRegisteredRunnersAllEvents:function(){
+  var emails=[];Runners.find({runnerHasPaid:true}).forEach(function(r){if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}})
+  var emailString = ""
+  emails.forEach(function(e){emailString+=(e+", ")})
+  return emailString;
+
+
+},
+usersRegisteredRunnersFunRun:function(){
+  var emails=[];Runners.find({runnerHasPaid:true,runnerRaceSelected:"Fun Run"}).forEach(function(r){if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}})
+  var emailString = ""
+  emails.forEach(function(e){emailString+=(e+", ")})
+  return emailString;
+
+
+},
+usersRegisteredRunnersDragonRun:function(){
+  var emails=[];Runners.find({runnerHasPaid:true,runnerRaceSelected:"5K Dragon Run"}).forEach(function(r){if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}})
+  var emailString = ""
+  emails.forEach(function(e){emailString+=(e+", ")})
+  return emailString;
+
+
 }
 
 });
@@ -677,8 +744,26 @@ Template.registrationList.events({
   Meteor.call('sendPaymentEmail',this.registrationEmail);
 
 
- }
+},
+'click #downloadRegistrationData': function(e) {
+  e.preventDefault();
 
+  var nameFile = 'registrationData.csv';
+  Meteor.call('download', function(err, fileContent) {
+    if(fileContent){
+      var blob = new Blob([fileContent], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, nameFile);
+      var a = document.createElement("a");
+
+    a.href = URL.createObjectURL(blob);
+    a.download = nameFile;
+    a.click();
+    console.log('file generated');
+    }
+    if(err){console.log(err)};
+
+  });
+}
 })
 
 
@@ -796,8 +881,7 @@ var searchObject = {registrationEmail:currUser.emails[0].address};    Session.se
      paymentMethod:paymentMethod,
      paymentDateText: paidDate,
      paymentDateEntered: paymentEnteredDate,
-     paymentUser: Meteor.user().emails[0].address,
-     year:2015
+     paymentUser: Meteor.user().emails[0].address
      }
 
      if(Session.equals('currentPaymentMethod','WeChat')){
@@ -836,7 +920,7 @@ var searchObject = {registrationEmail:currUser.emails[0].address};    Session.se
      if(Roles.userIsInRole(Meteor.user(),['admin','wechat','staff'])){
 
      var currRunner = this;
-     Runners.update({_id:this._id},{$set:{runnerHasPaid:false,runnerPaidDate:null,paymentID:null,paymentMethod:null}},function(error,result){
+     Runners.update({_id:this._id},{$set:{runnerHasPaid:false,runnerPaidDate:'',paymentID:'',paymentMethod:''}},function(error,result){
 
 if(result){
        console.log(currRunner);
@@ -1021,6 +1105,26 @@ return systemVariables.findOne({name:'registrationFee'}).value;
 
 })
 
+UI.registerHelper('showRunnerNumber',function(){
+
+return systemVariables.findOne({name:'showRunnerNumber'}).value;
+
+})
+
+UI.registerHelper('needVolunteers',function(){
+
+return systemVariables.findOne({name:'needVolunteers'}).value;
+
+
+})
+
+UI.registerHelper('registrationOpen',function(){
+
+return systemVariables.findOne({name:'registrationOpen'}).value;
+
+
+})
+
 
 UI.registerHelper('isWaiting',function(){
 
@@ -1054,6 +1158,137 @@ setEventConfiguration($(el).attr('name'),parseInt($(el).val()));
 
 
 })
+
+Template.pickupPage.onRendered(function(){
+
+  Session.set('pickupSearchObject',{});
+       var emails=[];
+       Runners.find({runnerHasPaid:true}).forEach(function(r){if(!_.contains(emails,r.registrationEmail)){emails.push(r.registrationEmail)}})
+       var lastNames = [];
+       Runners.find({runnerHasPaid:true}).forEach(function(r){if(!_.contains(lastNames,r.runnerLastName)){lastNames.push(r.runnerLastName)}})
+
+
+     $("#searchPickupByEmail").autocomplete({
+      minLength:2,
+      source: emails,
+      select: function( e, ui ) {
+
+    currentEmail = ui.item.value;
+
+    var searchObject = {};
+
+
+      searchObject['registrationEmail']=currentEmail;
+
+      Session.set('pickupSearchObject',searchObject);
+
+    }
+
+  });
+
+  $("#searchPickupByName").autocomplete({
+   minLength:2,
+   source: lastNames,
+   select: function( e, ui ) {
+
+ currentName = ui.item.value;
+
+ var searchObject = {};
+
+
+   searchObject['runnerLastName']=currentName;
+
+   Session.set('pickupSearchObject',searchObject);
+
+ }
+
+});
+
+    });
+
+  Template.pickupPage.events({
+
+
+    'keydown #searchPickupByEmail': function(e){
+
+    if (e.keyCode == '13') {
+         e.stopPropagation()
+
+       }
+
+    },
+    'focus #searchPickupByEmail, #searchPickupByName':function(e){
+
+      $('#searchPickupByEmail').val('')
+      $('#searchPickupByName').val('')
+
+
+    }
+
+
+
+
+})
+
+Template.pickupPage.helpers({
+
+searchObject:function(){
+
+
+return Session.get('pickupSearchObject');
+
+
+},
+
+retrievedRecords:function(){
+
+var searchObject = Session.get('pickupSearchObject');
+return Runners.find(searchObject);
+
+},
+
+num110: function(){
+return getPickupSearchRecords('110')
+},
+num120: function(){
+return getPickupSearchRecords('120')
+},
+num130: function(){
+return getPickupSearchRecords('130')
+},
+numXS: function(){
+  return getPickupSearchRecords('XS')
+},
+numS: function(){
+return getPickupSearchRecords('S')
+},
+numM: function(){
+  return getPickupSearchRecords('M')
+},
+numL: function(){
+  return getPickupSearchRecords('L')
+},
+numXL: function(){
+
+return getPickupSearchRecords('XL')
+},
+
+numXXL: function(){
+return getPickupSearchRecords('XXL')
+},
+
+
+})
+
+function getPickupSearchRecords(size){
+var searchObject = Session.get('pickupSearchObject');
+searchObject['runnerHasPaid']=true;
+searchObject['runnerShirtSize']=size;
+//console.log(searchObject);
+return Runners.find(searchObject).count();
+
+
+}
 
 function setEventConfiguration(propName,value){
 

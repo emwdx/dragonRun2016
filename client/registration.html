@@ -276,6 +276,61 @@ Pay Date:<input type = "date" value = "{{currentDate}}" id = "paymentDate">
 </div>
 </template>
 
+<template name = "pickupPage">
+<div class = "container HISGoldSolid">
+<div class = "row" >
+<div class = "col-md-4 " id = "emailSearch" >
+  <div class = "ui-widget">
+
+<input type = "text" placeholder = "Email'" id = "searchPickupByEmail" class = "form-control">
+</div>
+
+</div>
+<div class = "col-md-4 HISGoldSolid">
+  <div class = "ui-widget">
+<input type = "text" placeholder = "Last Name" id = "searchPickupByName" class = "form-control">
+</div>
+</div>
+
+</div>
+<div class = "row">
+<div class = "col-md-8 col-md-offset-2 gray-bg">
+    {{#if searchObject}}
+
+
+<table class = "table">
+
+ {{#each retrievedRecords}}
+<tr>
+<td>{{runnerFirstName}} {{runnerLastName}}, Runner #{{runnerNumber}}, {{runnerRaceSelected}}</td>
+
+<td>T-shirt size: {{runnerShirtSize}} </td>
+
+</tr>
+    {{/each}}
+</table>
+
+Totals:
+<table>
+<tr><td>T-shirt Size</td><td>Number of Shirts</td></tr>
+<tr><td>110</td><td>{{num110}}</td></tr>
+<tr><td>120</td><td>{{num120}}</td></tr>
+<tr><td>130</td><td>{{num130}}</td></tr>
+<tr><td>XS</td><td>{{numXS}}</td></tr>
+<tr><td>S</td><td>{{numS}}</td></tr>
+<tr><td>M</td><td>{{numM}}</td></tr>
+<tr><td>L</td><td>{{numL}}</td></tr>
+<tr><td>XL</td><td>{{numXL}}</td></tr>
+<tr><td>XXL</td><td>{{numXXL}}</td></tr>
+</table>
+
+    {{/if}}
+</div>
+</div>
+
+
+</div>
+</template>
 
 
 
@@ -423,13 +478,22 @@ verify
 </div>
 <hr>
 <div class = "row">
+  {{#if registrationOpen}}
 <div class = "col-md-4">
 <button class = "btn-xtra-lg portalButton" id = "addRunnerRegistration"><span class = "glyphicon glyphicon-plus"></span>New Runner</button>
+
 </div>
+{{/if}}
+
+{{#if needVolunteers}}
 <div class = "col-md-8 HISGold">
 <span class = "glyphicon glyphicon-heart"></span> <input type = "checkbox" id = "volunteerCheckbox"> <small>Add {{userEmail}} to the Dragon Run Volunteer Email list  </small>
 </div>
+{{/if}}
+
 </div>
+
+
 {{#if myRegistrations}}
 <div class = "row">
   <div class = "col-md-8 col-md-offset-2">
@@ -441,6 +505,8 @@ verify
 </table>
 </div>
 </div>
+
+{{#if registrationOpen}}
 <div class = "row">
   <div class = "col-md-8 col-md-offset-2">
 <span class = "HISGold"><b>Total Payment due by {{paymentDeadline}}:</b>
@@ -453,6 +519,7 @@ verify
   {{>paymentOptions}}
 </div>
 </div>
+{{/if}}
 
 {{/if}}
 
@@ -460,12 +527,23 @@ verify
 <div class = "row">
 <div class = "col-md-12 text-center HISGold">
   <h2>You have not yet registered any people to run.</h2>
+  <h2>您还没有注册</h2>
 
-  Click the 'New Runner' button above to register your first runner.
+  Click the 'New Runner' button above to register your first runner.<br>
+  点击上面的“New Runner”按钮注册参加
 
 </div>
 </div>
 {{/unless}}
+
+<div class = "row">
+  <div class = "col-md-12 text-center HISGold">
+    Please note that the Dragon Run is a FAMILY EVENT. As such it is an expectation that any and all children below middle school age are actively supervised during the event by their parents or legal guardians. Children arriving unaccompanied by a responsible adult will not be allowed to participate or enter the school grounds on Saturday, the day of the race. Thank you for your understanding and cooperation.
+<br/>
+请 家明 Dragon Run 是 个家庭运动项 。在活动中,我们要求所有初 中以下的孩 都要有  或者法定监护 的看护。周六(5 21号),跑步 当天,没有 个成年 陪同的孩 将不被允许参加或者进 学校运动场。感 谢您的理解和 持。
+
+  </div>
+</div>
 </div>
 </div>
 
@@ -475,15 +553,15 @@ verify
 <template name = "myRegistrationItem">
 
 <tr class = "HISBlue gray-bg">
-  <td><span class = "glyphicon glyphicon-trash deleteRunnerRegistration"></span></td>
-  <td><a href = "/registration/edit/{{_id}}/">Edit</a></td>
+  <td>{{#if registrationOpen}}<span class = "glyphicon glyphicon-trash deleteRunnerRegistration"></span>{{/if}}</td>
+  <td>{{#if registrationOpen}}<a href = "/registration/edit/{{_id}}/">Edit</a>{{/if}}</td>
 <td>{{runnerFullName}}: {{{runnerPaidStatus}}}
     <br>
 Registration Code: {{runnerRegistrationCode}} </td>
 
 {{#if showRunnerNumber}}
 
-<td>Runner Number: <b><span class = "text-success">{{runnerBibNumber}}</span></b></td>
+<td>Runner Number (5K only): <b><span class = "text-success">{{runnerNumber}}</span></b></td>
 
 {{/if}}
 </tr>
@@ -519,8 +597,8 @@ An individual can also pay for his/her registration total using the <span class 
 
 In the Wechat App, choose 'Discover', 'Scan QR Code', and then add the HIS Charity Dragon Run account using the QR code below.
     <div class = "row">
-      <div class = "col-md-12">
-        <img src = "/5KWeChat.png" class = "img-thumbnail">
+      <div class = "col-md-6 col-md-offset-3">
+        <img src = "/5KWeChat.jpg" class = "img-thumbnail" >
       </div>
     </div>
 
@@ -646,7 +724,15 @@ We will use the information submitted through this website only for purposes rel
 
 <template name = "registrationList">
 
-<div id = "registrationList">
+<div id = "registrationList" class = "HISGoldSolid">
+  <div class = "row">
+    <div class = "col-md-6 col-md-offset-3">
+      <h3>Download Registration Data</h3>
+      Click the button to generate a CSV file. This can be opened as a CSV file and contains all registration data currently in the system. Fields are separated by a semicolon (;).<p></p>
+      <button id = "downloadRegistrationData">Generate File</button>
+    </div>
+  </div>
+  <hr>
     Total Registered: {{numberRegistered}} <p></p>
     <a href = "/unpaidRunnerEmailList/">Not Paid ({{numberUnpaid}}):</a>
     <table>
@@ -656,8 +742,8 @@ We will use the information submitted through this website only for purposes rel
     <a href = "/registration/edit/{{_id}}/">{{runnerFirstName}} {{runnerLastName}} - {{runnerRegistrationCode}} </a>
     </td>
      {{#if isAdminUser}}
-    <td><button class = "deleteRunner"></button></td>
-    <td><button class = "sendPaymentEmail">Send Payment Email</button></td>
+    <td><button class = "deleteRunner">Delete</button></td>
+
          {{/if}}
     </tr>
 
@@ -677,7 +763,9 @@ We will use the information submitted through this website only for purposes rel
     </tr>
     {{/each}}
     </table>
+
 </div>
+
 
 
 </template>

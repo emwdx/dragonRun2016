@@ -54,7 +54,7 @@ Meteor.publish('payments',function(){
 if(this.userId){
     var currentUser = Meteor.users.findOne({_id:this.userId});
     if(Roles.userIsInRole(this.userId,['staff','admin'])){
-    return Payments.find({year:2015});
+    return Payments.find();
     }
 
     }
@@ -136,7 +136,19 @@ var email = Meteor.users.findOne({_id:userId});
   return "Email sent!";
 
 
- }
+},
+download: function() {
+  if(Roles.userIsInRole(this.userId,['admin','staff'])){
+  var collection = Runners.find().fetch();
+
+  var heading = false; // Optional, defaults to true
+  var delimiter = ";" // Optional, defaults to ",";
+  var result = exportcsv.exportToCSV(collection, heading, delimiter);
+  //console.log(result);
+  return result;
+}
+else{return "Not authorized"}
+}
 });
 
 Runners.allow({
